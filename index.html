@@ -127,6 +127,7 @@ const PROPERTIES = [
     name:"In der Mückendell 9",
     addr:"66125 Saarbrücken-Dudweiler (Dudweiler Süd / Geisenkopf)",
     district:"Dudweiler",
+    mapQuery:"In der Mückendell 9, 66125 Saarbrücken-Dudweiler",
     source:"ImmoScout24 (private seller)",
     listingUrl:"https://www.immobilienscout24.de/expose/167068557",
     listingPrice:175000,
@@ -471,6 +472,12 @@ function renderSingle(p){
     ${p.roomSizesEstimated?`<div class="legend">* Individual room sizes not dimensioned – estimated from total area × 0.65 ÷ ${p.rooms.length}. Verify before purchase.</div>`:(p.roomNote?`<div class="legend">${p.roomNote}</div>`:"")}
     <div class="legend">Per-room wg-gesucht.de comparable = closest-size room in the same district (rule from "saarbruecken-listings-daily"). Dudweiler has only one comparable (18 m²), so all rooms reference #25. The CF rent is based on the district benchmark ${num(p.benchmarkWarm,2)} €/m² (Warmmiete P75), NOT on the comparable room – so the CF is unchanged by it.</div>
     <div class="legend"><b>Rent confidence</b> = how achievable the set rent is versus a size-adjusted market rate (not a probability). Market rate = district wg-gesucht.de Warmmiete P75 (${num(p.benchmarkWarm,2)} €/m²), adjusted for room size since larger WG rooms realistically achieve a lower €/m² (and smaller rooms a higher one). The cheaper the set rent relative to that rate, the higher the confidence; at/above it, confidence falls. Dudweiler's comparable sample is thin (n=${(p.benchmarkStats||{}).n}), so treat it as a guide, not a guarantee — hover a badge for the figures.</div>
+  </div>
+
+  <div class="card">
+    <h2>Location</h2>
+    <iframe title="Map of ${p.name}" src="https://www.google.com/maps?q=${encodeURIComponent(p.mapQuery||p.addr)}&z=16&output=embed" style="width:100%;height:340px;border:0;border-radius:10px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="legend">${p.addr}. Google Maps loads on the published site. <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.mapQuery||p.addr)}" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
   </div>
 
   <div class="grid2">
