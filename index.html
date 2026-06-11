@@ -96,13 +96,18 @@ input.edit:focus{outline:2px solid var(--accent-bg);border-color:var(--accent)}
     </span>
   </div>
 
+  <div class="controls" style="margin-top:-4px">
+    <button id="saveShared" class="resetbtn" style="background:var(--accent);color:#fff;border-color:var(--accent);padding:7px 14px">Save shared values for everyone</button>
+    <span class="muted" style="font-size:12px">Publishes the current numbers so every device shows them (commits <code>values.json</code> on GitHub).</span>
+  </div>
+
   <div id="view"></div>
 
   <div class="smallnote">
     Cashflow RAG: &gt; €0 green · between €0 and −€100 amber · &lt; −€100 red.
     Rent = Warmmiete P75 benchmark (wg-gesucht.de, per district) × room area.
     Calculation per scheduled task "saarbruecken-listings-daily". Document data extracted from the property files.
-    Edited values (rents, garage, price, down payment, interest, repayment) are saved on this device, persist across reloads and across site updates, and drive comparison mode. Only the fields you change are stored — untouched fields keep picking up the latest defaults when the dashboard is updated. Each ↺ resets a single value to its default.
+    Shared values load from <code>values.json</code> on every device, so all devices show the same numbers. "Save shared values for everyone" publishes the current numbers (commits <code>values.json</code> on GitHub). Your own edits are also kept locally in this browser (layered on top of the shared values) and drive comparison mode; only changed fields are stored, so untouched fields follow the latest defaults. Each ↺ resets a single value.
   </div>
 </div>
 
@@ -195,6 +200,36 @@ const DEFAULTS = { interestPct:4.0, repaymentPct:2.0, downPct:5 }; // 4% interes
 // while untouched fields always track the newest defaults. Per id: { warm:{idx:val}, negotiated, garageRent, downPct, interestPct, repaymentPct }
 const overrides = {};
 const LSKEY = "ankaufPipelineOverrides_v3";
+// ---- shared values (GitHub-only): read values.json on load, save by committing it ----
+let sharedOverrides = {};
+const SHARED_URL = "values.json";
+const REPO_EDIT_URL = "https://github.com/mosrite/stupasrepipeline/edit/main/values.json";
+function loadShared(){
+  fetch(SHARED_URL + "?t=" + Date.now(), {cache:"no-store"})
+    .then(r => r.ok ? r.json() : {})
+    .then(o => { sharedOverrides = o || {}; render(); })
+    .catch(() => {});
+}
+function buildSharedPayload(){
+  const out = {};
+  for(const p of PROPERTIES){
+    const sp = {};
+    ['negotiated','garageRent','downPct','interestPct','repaymentPct'].forEach(f=>{
+      const v = effFin(p,f); if(Math.abs(v - defaultFin(p,f)) > 1e-6) sp[f] = v;
+    });
+    const dw = defaultWarm(p), wm = {};
+    p.rooms.forEach((r,i)=>{ const v = effWarm(p,i); if(Math.abs(v - dw[i]) > 0.005) wm[i] = v; });
+    if(Object.keys(wm).length) sp.warm = wm;
+    if(Object.keys(sp).length) out[p.id] = sp;
+  }
+  return out;
+}
+function saveShared(){
+  const payload = JSON.stringify(buildSharedPayload(), null, 2);
+  try { navigator.clipboard.writeText(payload); } catch(e) {}
+  window.open(REPO_EDIT_URL, "_blank");
+  alert("Shared values copied to clipboard.\n\nIn the GitHub tab that just opened:\n1) Select all (Cmd+A), paste (Cmd+V) to replace the file content.\n2) Click 'Commit changes'.\n\nFirst time only — if values.json doesn't exist yet: Add file → Create new file → name it values.json → paste → commit.\n\nEvery device shows the new values within ~1 minute.");
+}
 function defaultWarm(p){ return p.rooms.map(r=>Math.round(r.size*p.benchmarkWarm*100)/100); }
 function defaultNegotiated(p){ return Math.round(p.listingPrice * PARAMS.discount); }
 function defaultGarage(p){ return p.garageRent || 0; }
@@ -220,8 +255,17 @@ function migrateV2(old){
   }
 }
 function ovObj(p){ return overrides[p.id] || (overrides[p.id]={}); }
-function effWarm(p,i){ const o=overrides[p.id]; return (o&&o.warm&&o.warm[i]!=null) ? o.warm[i] : defaultWarm(p)[i]; }
-function effFin(p,f){ const o=overrides[p.id]; return (o&&o[f]!=null) ? o[f] : defaultFin(p,f); }
+// effective value: local browser edit → shared (values.json) → computed default
+function effWarm(p,i){
+  const lo=overrides[p.id]; if(lo&&lo.warm&&lo.warm[i]!=null) return lo.warm[i];
+  const so=sharedOverrides[p.id]; if(so&&so.warm&&so.warm[i]!=null) return so.warm[i];
+  return defaultWarm(p)[i];
+}
+function effFin(p,f){
+  const lo=overrides[p.id]; if(lo&&lo[f]!=null) return lo[f];
+  const so=sharedOverrides[p.id]; if(so&&so[f]!=null) return so[f];
+  return defaultFin(p,f);
+}
 function pruneEmpty(id){ const o=overrides[id]; if(o){ if(o.warm && Object.keys(o.warm).length===0) delete o.warm; if(Object.keys(o).length===0) delete overrides[id]; } }
 function commit(){ saveOverrides(); render(); }
 function setWarm(id,i,v){ const p=PROPERTIES.find(x=>x.id===id); const n=parseFloat(String(v).replace(',','.')); if(!isNaN(n)&&n>=0){ const o=ovObj(p); o.warm=o.warm||{}; o.warm[i]=Math.round(n*100)/100; commit(); } }
@@ -537,7 +581,9 @@ document.querySelectorAll("#modeSeg button").forEach(b=>b.addEventListener("clic
   render();
 }));
 [propSel,...cmp].forEach(s=>s.addEventListener("change",render));
+document.getElementById("saveShared").addEventListener("click", saveShared);
 render();
+loadShared();
 </script>
 </body>
 </html>
