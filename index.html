@@ -313,7 +313,7 @@ const PROPERTIES = [
     brokerNote:"2.97% incl. VAT (buyer)",
     verwaltung:"Clemens-Foh Immobilien & Hausverwaltungen (prev. RIES Immobilien)",
     typeFloor:"Apartment, 2nd floor, no lift",
-    roomsAreaText:"3 lettable rooms + separate kitchen + dining + bath · 100 m²",
+    roomsAreaText:"4 lettable rooms (3 Zimmer + dining room) + separate kitchen + bath · 100 m²",
     features:["Balcony (street side)","Terrace/balcony (courtyard side)","separate fitted kitchen","large cellar room","garage/indoor parking (extra €25,000)","massive construction"],
     garageRent:70,
     garageRentNote:"⚠️ Garage is NOT in the €295k price — it costs an ADDITIONAL €25,000 to buy. Mannheim single garage ~€60–80/mo; €70 assumed. ~3.4% gross yield on the €25k → marginal; the CF counts €70 income but ignore it if the garage is not bought.",
@@ -325,10 +325,12 @@ const PROPERTIES = [
       {name:"Zimmer 2", size:19.47, warm:450, band:{n:23, med:500, method:"band"},
         wgComparable:{ref:251, district:"Neckarstadt", size:19, warm:396, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim-Neckarstadt.13641562.html", title:"WG-Zimmer Neckarstadt 19 m²"}},
       {name:"Zimmer 3", size:17.97, warm:440, band:{n:34, med:497.5, method:"band"},
-        wgComparable:{ref:349, district:"Neckarstadt", size:18, warm:400, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim-Neckarstadt.13383871.html", title:"WG-Zimmer Neckarstadt 18 m²"}}
+        wgComparable:{ref:349, district:"Neckarstadt", size:18, warm:400, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim-Neckarstadt.13383871.html", title:"WG-Zimmer Neckarstadt 18 m²"}},
+      {name:"Zimmer 4 (dining room)", size:8.95, warm:330, band:{n:1, med:320, method:"size-fit"},
+        wgComparable:{ref:322, district:"Neckarstadt", size:11, warm:320, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim-Neckarstadt.13559296.html", title:"WG-Zimmer Neckarstadt 11 m²"}}
     ],
     roomSizesEstimated:false,
-    roomNote:"Actual dimensions from the subdivision plan (Teilungsplan 2.OG, unit 9): Zimmer 1 21.87, Zimmer 2 19.47, Zimmer 3 17.97 m². Separate kitchen 9.30, dining (Essen) 8.95 (common/dining), bath 3.84, hall 8.78, two balconies (7.71 + 1.38). Clean WG cut: no walk-through rooms, largest 21.87 < 2× smallest 17.97 (35.94). Warm rents are conservative per-room values anchored to Neckarstadt-West (n=3 local: 331/410/450); the broader Neckarstadt pool (n=45) medians ~€500 — used for benchmarkStats but flagged low local confidence.",
+    roomNote:"Actual dimensions from the subdivision plan (Teilungsplan 2.OG, unit 9): three rooms 21.87 / 19.47 / 17.97 m² plus a dining room (Essen) 8.95 m², a separate kitchen 9.30, bath 3.84, hall 8.78, two balconies (7.71 + 1.38). Modelled as a 4-room WG — the three Zimmer plus the Essen as bedrooms, with the separate kitchen as the shared/common space. The 8.95 m² room is small (nearest comparable an 11 m² room at €320 warm) → €330 assumed (⚠️ thin data). Big-three warm rents anchored conservatively to Neckarstadt-West (local n=3: 331/410/450); broader Neckarstadt pool (n=45) medians ~€500. WG-suitable: largest 21.87 < 2× second-largest 19.47.",
     wgComparable:{ref:349, district:"Neckarstadt", size:18, warm:400, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim-Neckarstadt.13383871.html", title:"Mannheim Neckarstadt — wg-gesucht comparables, n=45 (Neckarstadt-West n=3)"},
     distances:[
       {k:"University (Uni Mannheim, Schloss)", v:"~2.5–3 km · by car ~10 min · by bike ~12–15 min · by tram ~15–20 min"},
@@ -339,12 +341,12 @@ const PROPERTIES = [
     microLocation:{rag:"a", title:"Neckarstadt-West — urban, working-class, improving but not prime",
       text:"Neckarstadt-West is a dense, multicultural inner-city quarter with full daily infrastructure, tram access and the Neckar promenade nearby. WG demand exists (proximity to Uni Mannheim and Hochschule) but the sub-district sits below the prime Neckarstadt-Ost/Jungbusch levels — local wg-gesucht evidence is thin (n=3) and rents trend ~10–15% under the broader Neckarstadt pool. Good connectivity, moderate WG desirability."},
     considerations:[
-      {rag:"r", t:"Deep negative cashflow (~−€580/mo)", d:"Warm rents ≈ €1,350 + garage €70 vs annuity ≈ €1,331 (280.25k negotiated, 5% down, 4%+2%) + Hausgeld €654 + property tax €15. Even at broader-Neckarstadt rents (~€1,497) CF ≈ −€433. Structurally cash-negative at €295k."},
+      {rag:"r", t:"Negative cashflow (~−€250/mo)", d:"Warm rents ≈ €1,680 (four rooms incl. the ~9 m² dining room) + garage €70 vs annuity ≈ €1,331 (280.25k negotiated, 5% down, 4%+2%) + Hausgeld €654 + property tax €15. At broader-Neckarstadt rents for the three large rooms CF ≈ −€100. The high €654 Hausgeld keeps it cash-negative even as a 4-room WG."},
       {rag:"r", t:"High Hausgeld driven by expensive Fernwärme", d:"~€654/mo total, of which ~€326/mo is district-heating in a 1969 building. Heating is umlagefähig, but market warm rents in Neckarstadt-West cap what is recoverable, so the gap depresses CF. A 1969 envelope means heating stays costly."},
       {rag:"a", t:"Energy certificate expired (valid only to 10.10.2022)", d:"A new certificate is legally required for sale/letting. The building efficiency itself (107 kWh, ~class D) is acceptable, so this is a documentation gap rather than a quality flag."},
       {rag:"a", t:"Ongoing building capex & special measures", d:"WEG 2025 budget carries €20k Großreparaturen + €5k Reparaturen; cellar-pipe renovation started mid-2025 (water shut-offs), plus resolutions on electrifying the underground-garage door and pigeon control — reserve draw and possible special levies ahead."},
       {rag:"a", t:"Garage only via €25k extra purchase", d:"The single garage is not in the €295k price; buying it (+€25,000) for ~€70/mo rent is ~3.4% gross — marginal. CF includes the €70; drop it if the garage is not acquired."},
-      {rag:"g", t:"Strong, clean WG layout", d:"Three large, independently accessible bedrooms (21.9 / 19.5 / 18.0 m²) plus a separate kitchen and a dining room; no walk-through rooms and largest < 2× smallest → very good WG-Schnitt. The problem is price/Hausgeld, not the floor plan."}
+      {rag:"g", t:"Clean 4-room WG layout", d:"Four lettable rooms — three large bedrooms (21.9 / 19.5 / 18.0 m²) plus the ~9 m² dining room as a small 4th room — with a separate kitchen as the shared common space; no walk-through rooms, largest < 2× second-largest → good WG-Schnitt. The problem is price/Hausgeld, not the floor plan."}
     ],
     investDocs:[
       {label:"Energy performance certificate", ok:"r", note:"Present but EXPIRED (valid to 10.10.2022) — new one required"},
