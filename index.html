@@ -159,6 +159,7 @@ const PROPERTIES = [
     garageRentNote:"Garage let separately. Dudweiler market for a single garage ~€50–90/month; €60 assumed (conservative). ⚠️ estimate.",
     benchmarkWarm:23.56, // Warmmiete P75 €/m² Dudweiler (live Google Sheet, n=2)
     benchmarkStats:{n:2, p50:23.56, p75:23.56, max:23.56}, // Dudweiler wg-gesucht.de Warmmiete €/m² distribution (live sheet)
+    reserve:{total:40928.57, share:5320.71, asOf:"31 Dec 2024", note:"Your 130-MEA share. ~€24k of approved works (garage waterproofing, balcony, unit-5 windows) are still to be paid → the buffer tightens to ~€17k for the 13-unit building."},
     rooms:[
       {name:"Living / dining room", size:31.60},
       {name:"Master bedroom", size:15.80},
@@ -238,6 +239,7 @@ const PROPERTIES = [
     garageRentNote:"",
     benchmarkWarm:390,
     benchmarkStats:{n:18, p50:390, p75:416.8, unit:"room"},
+    reserve:{total:null, share:null, note:"Not documented — only Wirtschaftspläne were provided, no Hausgeldabrechnung with the reserve development. Request it (in 2024 €2,504.71 was drawn from the reserve)."},
     rooms:[
       {name:"Living room", size:23.04, warm:390, band:{n:8, med:390, method:"band"},
         wgComparable:{ref:355, district:"West", size:23, warm:390, link:"https://www.wg-gesucht.de/wg-zimmer-in-Kassel-West.13569120.html", title:"Großes WG-Zimmer im Vorderen Westen"}},
@@ -319,6 +321,7 @@ const PROPERTIES = [
     garageRentNote:"⚠️ Garage is NOT in the €295k price — it costs an ADDITIONAL €25,000 to buy. Mannheim single garage ~€60–80/mo; €70 assumed. ~3.4% gross yield on the €25k → marginal; the CF counts €70 income but ignore it if the garage is not bought.",
     benchmarkWarm:490,
     benchmarkStats:{n:45, p50:490, p75:550, unit:"room"},
+    reserve:{total:79622.81, share:5329.77, asOf:"30 Jun 2025", note:"Unit MEA 677.41/10120. Reserve grew (€60,277 → €79,623 over 2024/25), but €20k/yr Großreparaturen is budgeted and cellar-pipe works are underway."},
     rooms:[
       {name:"Zimmer 1", size:21.87, warm:460, band:{n:15, med:500, method:"band"},
         wgComparable:{ref:268, district:"Neckarstadt-Ost", size:22, warm:580, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim-Neckarstadt-Ost.12990067.html", title:"WG-Zimmer Neckarstadt-Ost 22 m²"}},
@@ -387,7 +390,7 @@ const PROPERTIES = [
     bezugsfrei:"vacant (bezugsfrei, after cosmetic renovation)",
     baujahr:1949,
     modernisierung:1999,
-    heating:"Gas floor heating (Etagenheizung), boiler 2016 — outside the Hausgeld",
+    heating:"Gas floor heating (individual Etagenheizung), boiler 2016 — owner-maintained, not a WEG cost (GEG conversion risk)",
     energy:{art:"Demand certificate", val:245.4, unit:"kWh/(m²·a)", cls:"G", valid:"28 Oct 2028"},
     hausgeld:317,
     hausgeldNote:"Business plan (Wirtschaftsplan) 2025 (Aulenbacher) = €3,801.13/yr ≈ €317/mo total: €2,919.38 Bewirtschaftung + €881.75 reserve. Low because heating is a private gas Etagenheizung (not in the Hausgeld) — tenants pay their own gas. New monthly advance from 01.06.2025 = €307 (after 5 months already billed higher).",
@@ -401,6 +404,7 @@ const PROPERTIES = [
     garageRentNote:"No garage/parking sold; free street parking in the traffic-calmed zone.",
     benchmarkWarm:330,
     benchmarkStats:{n:9, p50:330, p75:421, unit:"room"},
+    reserve:{total:null, share:null, note:"Not documented — only the Wirtschaftsplan 2025 was provided (reserve contribution €3,500/yr total, this unit €881.75/yr). Request the reserve development from the Jahresabrechnung 2024 (Aulenbacher)."},
     rooms:[
       {name:"Central room (Wohnzimmer)", size:16.5, warm:346, band:{n:4, med:330, method:"size-fit"},
         wgComparable:{ref:21, district:"Alt-Saarbrücken", size:18, warm:325, link:"https://www.wg-gesucht.de/wg-zimmer-in-Saarbruecken-Alt-Saarbruecken.13461212.html", title:"WG-Zimmer Alt-Saarbrücken 18 m²"}},
@@ -424,11 +428,12 @@ const PROPERTIES = [
       text:"Quiet residential side street in Alt-Saarbrücken (Habsterdick), traffic-calmed, with daily needs and bus 109 nearby and good road links (A1/A6/A620). It is away from the lively St. Johann / Nauwieser student core, so WG demand and rent levels are lower than central Saarbrücken (local wg-gesucht n=9, p50 €330/room). Solid for tenants who want quiet; weaker for premium WG rents."},
     considerations:[
       {rag:"a", t:"4th room opens off the central room — add a hall door", d:"Three rooms open directly off the hall; the 4th (~13.5 m²) is reached through the central room. For full by-room privacy add a direct hall door to it (minor work; the hall runs along its top wall), or let the central room as the shared space. Counted as a 4-room WG because the kitchen is a separate closed room that serves as the common space."},
-      {rag:"g", t:"Positive cashflow (~+€275/mo)", d:"Four lettable rooms (16.5 / 14.7 / 13.5 / 13.5 m²) warm ≈ €1,325 vs annuity ≈ €717 (151.05k negotiated, 5% down, 4%+2%) + Hausgeld €317 + tax €15. The low Hausgeld (private gas Etagenheizung, outside the WEG) is what makes it cash-positive; Alt-Saarbrücken rents are conservative (n=9 size-fit), central-SB levels would push CF higher."},
+      {rag:"g", t:"Positive cashflow (~+€275/mo)", d:"Four lettable rooms (16.5 / 14.7 / 13.5 / 13.5 m²) warm ≈ €1,325 vs annuity ≈ €717 (151.05k negotiated, 5% down, 4%+2%) + Hausgeld €317 + tax €15. The low WEG Hausgeld (heating is not a WEG cost — individual Etagenheizung, see caveat) keeps it cash-positive; Alt-Saarbrücken rents are conservative (n=9 size-fit), central-SB levels would push CF higher."},
       {rag:"a", t:"Energy class G despite 1999 modernisation", d:"Demand certificate 245.4 kWh/m² (class G) on a 1910/1949 building — poor envelope. Higher heating cost for tenants (they pay their own gas) and GEG/retrofit risk over time."},
-      {rag:"a", t:"Open building works & tiny WEG", d:"Chimney-head demolition (~€6,000–8,586) still not executed after >1 year; cellar openings to be bricked/glass-blocked. Only 4 parties, so each owner bears 25% of any special levy."},
+      {rag:"a", t:"Small 4-party WEG", d:"Only four owners, so each bears 25% of any special levy and the reserve base is thin. The chimney-head removal (resolved 2023, ~€6,000 at community cost) and the cellar-window closure are decided routine measures from the reserve — execution is delayed but they are not a buyer risk."},
       {rag:"a", t:"Build-year discrepancy to clarify", d:"Exposé states 1949, the energy certificate states 1910 (Wärmeerzeuger 2016). Clarify the true build year (affects depreciation/AfA and refurbishment expectations)."},
-      {rag:"g", t:"Low Hausgeld, vacant, commission-bearing", d:"Because heating is a private gas Etagenheizung, the Hausgeld is low (~€317/mo incl. reserve). Flat is vacant/immediately available in a quiet small building. Note: sale is NOT commission-free (3.57%)."}
+      {rag:"a", t:"Gas Etagenheizung is a drawback (owner boiler + GEG risk)", d:"Heating is an individual gas boiler (2016) in the flat, not a shared WEG system. Servicing and eventual replacement fall solely on the owner, and under the GEG/Heizungsgesetz converting a single flat off gas (heat pump/district heating) is harder and costlier than a shared central system. It keeps the WEG Hausgeld low, but the heating itself is a disadvantage, not a plus."},
+      {rag:"g", t:"Low Hausgeld & vacant", d:"WEG Hausgeld is low (~€317/mo incl. reserve) because heating sits outside the community. Flat is vacant/immediately available in a quiet small building. Note: sale is NOT commission-free (3.57%)."}
     ],
     investDocs:[
       {label:"Energy performance certificate", ok:"g", note:"Demand certificate (class G), valid to 28.10.2028"},
@@ -795,6 +800,15 @@ function renderSingle(p){
       <b>${p.microLocation.title}</b>
       <div class="muted" style="margin-top:6px">${p.microLocation.text}</div>
     </div>
+  </div>
+
+  <div class="card">
+    <h2>Maintenance reserve (Erhaltungsrücklage)</h2>
+    ${(p.reserve && p.reserve.total!=null)
+      ? `<div class="rowline"><span class="k">Total WEG reserve${p.reserve.asOf?` (as of ${p.reserve.asOf})`:''}</span><span class="v">${eur(p.reserve.total)}</span></div>
+         <div class="rowline"><span class="k">This unit&#39;s share</span><span class="v">${eur(p.reserve.share)}</span></div>
+         ${p.reserve.note?`<div class="muted" style="margin-top:6px">${p.reserve.note}</div>`:''}`
+      : `<div class="muted">${(p.reserve&&p.reserve.note)||'Not documented — request the reserve development (Entwicklung der Erhaltungsrücklage) from the Hausgeldabrechnung.'}</div>`}
   </div>
 
   <div class="card">
