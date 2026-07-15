@@ -122,7 +122,9 @@ const PARAMS = {
   annuityFactor: 0.00539, // monthly annuity factor
   equityPct: 0.05,        // own equity share
   otherKnkPct: 0.085,     // RETT 6.5% + notary 1.5% + land registry 0.5%
-  propertyTax: 15         // property tax flat €/month
+  propertyTax: 15,        // property tax flat €/month
+  appliances: 1000,       // appliances (washing machine, fridge, etc.) — always included in equity
+  kitchen: 6000           // fitted kitchen — added to equity when none is installed
 };
 
 const PROPERTIES = [
@@ -160,6 +162,7 @@ const PROPERTIES = [
     benchmarkWarm:23.56, // Warmmiete P75 €/m² Dudweiler (live Google Sheet, n=2)
     benchmarkStats:{n:2, p50:23.56, p75:23.56, max:23.56}, // Dudweiler wg-gesucht.de Warmmiete €/m² distribution (live sheet)
     reserve:{total:40928.57, share:5320.71, asOf:"31 Dec 2024", note:"Your 130-MEA share. ~€24k of approved works (garage waterproofing, balcony, unit-5 windows) are still to be paid → the buffer tightens to ~€17k for the 13-unit building."},
+    kitchenInstalled:false,
     rooms:[
       {name:"Living / dining room", size:31.60},
       {name:"Master bedroom", size:15.80},
@@ -240,6 +243,7 @@ const PROPERTIES = [
     benchmarkWarm:390,
     benchmarkStats:{n:18, p50:390, p75:416.8, unit:"room"},
     reserve:{total:null, share:null, note:"Not documented — only Wirtschaftspläne were provided, no Hausgeldabrechnung with the reserve development. Request it (in 2024 €2,504.71 was drawn from the reserve)."},
+    kitchenInstalled:true,
     rooms:[
       {name:"Living room", size:23.04, warm:390, band:{n:8, med:390, method:"band"},
         wgComparable:{ref:355, district:"West", size:23, warm:390, link:"https://www.wg-gesucht.de/wg-zimmer-in-Kassel-West.13569120.html", title:"Großes WG-Zimmer im Vorderen Westen"}},
@@ -322,6 +326,7 @@ const PROPERTIES = [
     benchmarkWarm:490,
     benchmarkStats:{n:45, p50:490, p75:550, unit:"room"},
     reserve:{total:79622.81, share:5329.77, asOf:"30 Jun 2025", note:"Unit MEA 677.41/10120. Reserve grew (€60,277 → €79,623 over 2024/25), but €20k/yr Großreparaturen is budgeted and cellar-pipe works are underway."},
+    kitchenInstalled:true,
     rooms:[
       {name:"Zimmer 1", size:21.87, warm:460, band:{n:15, med:500, method:"band"},
         wgComparable:{ref:268, district:"Neckarstadt-Ost", size:22, warm:580, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim-Neckarstadt-Ost.12990067.html", title:"WG-Zimmer Neckarstadt-Ost 22 m²"}},
@@ -405,6 +410,7 @@ const PROPERTIES = [
     benchmarkWarm:330,
     benchmarkStats:{n:9, p50:330, p75:421, unit:"room"},
     reserve:{total:null, share:null, note:"Not documented — only the Wirtschaftsplan 2025 was provided (reserve contribution €3,500/yr total, this unit €881.75/yr). Request the reserve development from the Jahresabrechnung 2024 (Aulenbacher)."},
+    kitchenInstalled:false,
     rooms:[
       {name:"Central room (Wohnzimmer)", size:16.5, warm:346, band:{n:4, med:330, method:"size-fit"},
         wgComparable:{ref:21, district:"Alt-Saarbrücken", size:18, warm:325, link:"https://www.wg-gesucht.de/wg-zimmer-in-Saarbruecken-Alt-Saarbruecken.13461212.html", title:"WG-Zimmer Alt-Saarbrücken 18 m²"}},
@@ -584,7 +590,8 @@ function calc(p){
   const brokerAbs = negotiated * p.brokerPct;
   const otherKnk = negotiated * PARAMS.otherKnkPct;
   const knk = brokerAbs + otherKnk;
-  const totalEquity = downPay + knk;
+  const setupCosts = PARAMS.appliances + (p.kitchenInstalled===false ? PARAMS.kitchen : 0);
+  const totalEquity = downPay + knk + setupCosts;
   // ---- yields & returns (formulas from portfolio_dashboard.html) ----
   const nkFlat = 5; // €/m² NK embedded in Warmmiete
   const kaltMonthly = (warmTotal - nkFlat*roomArea) + garageRent; // cold rent incl. garage
@@ -596,7 +603,7 @@ function calc(p){
   const roe = totalEquity>0 ? noiAfterInterestAnnual/totalEquity*100 : null;       // NOI after interest / (Equity+KNK)
   const loanYears = loanDurationYears(loan, interestPctV, annuity);
   const beYears = breakEvenYears(warmTotal+garageRent, p.hausgeld, PARAMS.propertyTax, loan, annuity, interestPctV, totalEquity);
-  return {negotiated, loan, annuity, annuityFactor, interestPct:interestPctV, repaymentPct:repaymentPctV, downPct:downPctV, roomArea, warmPerRoom, warmTotal, garageRent, cf, downPay, brokerAbs, otherKnk, knk, totalEquity, grossYield, netYield, roe, loanYears, beYears};
+  return {negotiated, loan, annuity, annuityFactor, interestPct:interestPctV, repaymentPct:repaymentPctV, downPct:downPctV, roomArea, warmPerRoom, warmTotal, garageRent, cf, downPay, brokerAbs, otherKnk, knk, setupCosts, totalEquity, grossYield, netYield, roe, loanYears, beYears};
 }
 // Per-room confidence that the set rent is achievable. Data-driven heuristic:
 // (1) room rent rate (€/m²) vs district wg-gesucht.de distribution (P50/P75/max),
@@ -728,8 +735,9 @@ function renderSingle(p){
       <div class="rowline"><span class="k">Down payment (${finInp(p.id,'downPct',num(c.downPct,1),0.5,56)}%${finRb(p,'downPct')})</span><span class="v">${eur(c.downPay)}</span></div>
       <div class="rowline"><span class="k">Broker (${p.brokerPct>0?num(p.brokerPct*100,2)+"%":"0% – "+p.brokerNote})</span><span class="v">${eur(c.brokerAbs)}</span></div>
       <div class="rowline"><span class="k">Other purchase costs (RETT 6.5 + notary 1.5 + land reg. 0.5%)</span><span class="v">${eur(c.otherKnk)}</span></div>
+      <div class="rowline"><span class="k">Furnishing (appliances €1,000${p.kitchenInstalled===false?" + fitted kitchen €6,000":""})</span><span class="v">${eur(c.setupCosts)}</span></div>
       <div class="rowline" style="border-top:2px solid var(--line);padding-top:8px;margin-top:2px"><span class="k" style="font-weight:700;color:var(--ink)">Total equity</span><span class="v">${eur(c.totalEquity)}</span></div>
-      <div class="legend">Loan ${eur(c.loan)} (negotiated price − down payment). Default: listing × 0.95 · 5% down · 4% interest + 2% repayment = 6%/yr (annuity factor 0.005/month). Note: the daily Saarbrücken sheet uses a fixed 0.00539/month (≈6.47%/yr), so its annuity is slightly higher. Edit values inline; the ↺ resets a single value to its default.</div>
+      <div class="legend">Loan ${eur(c.loan)} (negotiated price − down payment). Default: listing × 0.95 · 5% down · 4% interest + 2% repayment = 6%/yr (annuity factor 0.005/month). Note: the daily Saarbrücken sheet uses a fixed 0.00539/month (≈6.47%/yr), so its annuity is slightly higher. Edit values inline; the ↺ resets a single value to its default. Equity also includes €1,000 for appliances (always) and €6,000 for a fitted kitchen where none is installed.</div>
     </div>
   </div>
 
