@@ -295,6 +295,91 @@ const PROPERTIES = [
       {label:"Living-area calculation (Wohnflächenberechnung)", ok:"r", note:"Not provided — 53.45 m² comes only from the manager's distribution key, and the ~60 m² in the advert is unevidenced"}
     ]
   }
+  ,{
+    id:"mannheim_friedrichsring40",
+    name:"Friedrichsring 40",
+    city:"Mannheim",
+    addr:"Friedrichsring 40, 68161 Mannheim – Oststadt (Übergang zur Innenstadt)",
+    district:"Oststadt / Schwetzingerstadt",
+    benchmarkModel:"per-room",
+    mapQuery:"Friedrichsring 40, 68161 Mannheim",
+    places:{
+      university:{q:"Universität Mannheim, Schloss, 68161 Mannheim"},
+      nauwieser:{q:"Paradeplatz, 68161 Mannheim"},
+      transit:{q:"Mannheim, Nationaltheater, Friedrichsring, 68161 Mannheim"},
+      supermarket:{q:"REWE, S 6 29-32, 68161 Mannheim", search:"supermarket"}
+    },
+    placeLabels:{university:"Route to Uni Mannheim (Schloss)", nauwieser:"Route to city centre (Paradeplatz / Planken)", transit:"Route to closest tram stop (⚠️ confirm on site)", supermarket:"Route to closest supermarket (⚠️ confirm on site)"},
+    source:"Richter Immobilien GmbH, Hebelstr. 23, 68161 Mannheim (Ralf Eyer) — Immowelt listing, reference 1020, online-ID 26MX72V2IYZ8",
+    listingUrl:"https://www.immowelt.de/expose/5644dabc-c32a-45e7-bb7f-677a7456ed78",
+    listingPrice:269000,
+    area:78.74,
+    pricePerSqm:3416,
+    bezugsfrei:"⚠️ Not stated in the listing — no tenancy is mentioned, but vacant possession is never confirmed either. The by-room model needs the flat empty; clarify with the agent before bidding.",
+    baujahr:1903,
+    modernisierung:"Continuous programme 2010–2024 per the owners' own Baubeschreibung: district-heating compact station with night setback (2010), new clay-tile roof with slate dormers and insulation (2010), full cellar refurbishment (2011), structural strengthening of all cellar ceilings (2012), new main power supply with uprated capacity and new sub-distribution per unit (2012), instantaneous water heaters replacing boilers (2012), stainless-steel fresh-water mains (2013), courtyard balconies (2013), water softening plant (2019), street-side façade and balcony refurbishment (2020), stairwell (2021), courtyard walls (2024)",
+    heating:"District heating (Fernwärme) with a compact circuit-separation station for the whole house; hot water via instantaneous heaters per flat. Heating sits INSIDE the Hausgeld (€50/mo advance) and is umlagefähig, so the tenants' NK carries it and no §71 GEG obligation falls on you.",
+    energy:{art:"Consumption certificate (Verbrauchsausweis, Techem)", val:68, unit:"kWh/(m²·a)", cls:"B", valid:"reg. BW-2025-005908203, valid to 17.08.2035"},
+    hausgeld:270,
+    hausgeldNote:"€270.00/mo = €160 operating-cost advance (raised from €145 with the 2024/25 statement) + €50 heating advance + €60 reserve contribution. Unusually transparent because the community self-administers: the 2024/25 statement settles at €1,755.76 operating costs and €584.64 heating for this unit, i.e. €195.03/mo of actual cost, and there is NO manager's fee line at all. Grundsteuer is €175.38/yr (€14.62/mo) per the 2025 Mannheim assessment, so the dashboard's €15 flat is almost exact. ⚠️ KNK uses the dashboard's global 8.5% — Baden-Württemberg RETT is 5.0%, so purchase costs are overstated by 1.5 pts ≈ €3,833 and the true equity requirement is nearer €46,800.",
+    brokerPct:0.0357,
+    brokerNote:"3.57% incl. VAT payable by the buyer to Richter Immobilien GmbH",
+    verwaltung:"⚠️ Self-administered since 2025. Ralf Sommer (a co-owner) was elected manager until 2027, but the 2025 assembly (24.01.2026) resolved to scrap the management contract; administration and maintenance now run through the co-owners Chris Leder and Simon Dörr, with the service-charge statement produced via the eddi24.de portal at ~€16 per statement borne by each owner. No contractual tie to eddi24.",
+    typeFloor:"WE 11, 4th floor left, MEA 71/1,000, in a 13-unit 1903 building (EG to 4.OG plus a 5.OG roof floor and two basement levels, 1,178 m² total living space, 468 m² plot, Flurstück 4845/15). NO lift.",
+    roomsAreaText:"3 rooms + separate kitchen/dining room + bath · 78.74 m² per WoFlV (1000hands AG, 15.12.2025) · Schlafen 21.59 · Wohnen 18.05 · Küche/Essen 14.70 · Arbeiten 11.84 · Flur 8.04 · Bad 4.52",
+    features:["measured WoFlV floor area with a dimensioned 1:100 plan","district heating inside the Hausgeld","communal garden with terrace, barbecue corner and bicycle parking","own cellar compartment, two basement levels","water softening plant (hardness 4°) for the whole building","stainless-steel fresh-water mains","no lift — 4th floor walk-up","no balcony for this unit","no fitted kitchen mentioned"],
+    kitchenInstalled:false,
+    garageRent:0,
+    garageRentNote:"No garage or parking space with the unit; on-street parking in the Oststadt is resident-permit territory, so budget nothing here",
+    benchmarkWarm:535,
+    benchmarkStats:{n:75, p50:493, p75:550, unit:"room"},
+    rooms:[
+      {name:"Room 1 (Schlafen, largest bedroom)", size:21.59, warm:535.00, band:{n:32, med:535.00, method:"band"},
+        wgComparable:{ref:277, district:"Mannheim-Oststadt/Quadrate/Innenstadt", size:22, warm:550, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim.85.0.1.0.html", title:"Oststadt + Quadrate + Innenstadt — closest-size comparable"}},
+      {name:"Room 2 (Wohnen, living room)", size:18.05, warm:500.00, band:{n:40, med:500.00, method:"band"},
+        wgComparable:{ref:242, district:"Mannheim-Oststadt/Quadrate/Innenstadt", size:18, warm:611, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim.85.0.1.0.html", title:"Oststadt + Quadrate + Innenstadt — closest-size comparable"}},
+      {name:"Room 3 (Arbeiten, study)", size:11.84, warm:425.00, band:{n:16, med:425.00, method:"band"},
+        wgComparable:{ref:270, district:"Mannheim-Oststadt/Quadrate/Innenstadt", size:12, warm:540, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim.85.0.1.0.html", title:"Oststadt + Quadrate + Innenstadt — closest-size comparable"}}
+    ],
+    roomSizesEstimated:false,
+    roomNote:"Room sizes are MEASURED and certified: the 1000hands AG living-area calculation of 15.12.2025 for WE 11, signed by a Dipl.-Ing. Architekt, a Dipl.-Vermessungsingenieur and a Dipl. Bau-Ing., together with the matching dimensioned 1:100 plan (grundriss.com, 09.12.2025). Schlafen 21.59 · Wohnen 18.05 · Küche/Essen 14.70 · Arbeiten 11.84 · Flur 8.04 · Bad 4.52 = 78.74 m² per WoFlV. Küche/Essen is an enclosed room of its own off the hall, not an open-plan kitchen, so no deduction applies — but it is a kitchen and therefore does not count as a lettable room either. Three lettable rooms: 21.59 / 18.05 / 11.84. WG balance is the best in the pipeline — the largest room is only 1.20× the second-largest. Efficiency is good too: 51.48 of 78.74 m² (65%) is lettable room area. ⚠️ Note the WEG still charges this unit on 83.4 m²; the 2025 measurement is 4.66 m² lower, which would cut the Hausgeld share if the key is ever updated.",
+    wgComparable:{ref:277, district:"Mannheim-Oststadt / Quadrate / Innenstadt", size:22, warm:550, link:"https://www.wg-gesucht.de/wg-zimmer-in-Mannheim.85.0.1.0.html", title:"Oststadt + Quadrate + Innenstadt pool, n=75, P50 €493, P75 €550"},
+    distances:[
+      {k:"University (Uni Mannheim, Schloss)", v:"~1.5 km · by bike ~6 min, completely flat straight through the Quadrate · by tram roughly 10 min door to door · on foot ~20 min. Hochschule Mannheim is a further 3 km south. ⚠️ Distances estimated from the address, not routed — use the map button."},
+      {k:"Nearest public transport", v:"⚠️ Tram stop \"Mannheim, Nationaltheater\" on the Friedrichsring itself, a few minutes' walk; the rnv is renewing the Friedrichsring–Kaiserring track section, so expect works and diversions. Alte Feuerwache and Collini-Center are the other stops in range towards the Neckar. Confirm the exact nearest stop on site."},
+      {k:"Supermarket", v:"⚠️ Not confirmed for this exact address. REWE at S 6 29–32 in the Quadrate (~1 km) is the nearest verified full-range store; there is further retail on the Planken and in Q6/Q7. The map button falls back to a category search."},
+      {k:"City centre (Paradeplatz / Planken)", v:"~1 km · ~12 min on foot · ~4 min by bike · flat. The flat sits on the ring road at the transition from the Oststadt into the Quadrate, with the Neckar a few minutes north."}
+    ],
+    microLocation:{rag:"g", title:"Friedrichsring — on the ring road between the Quadrate and the Neckar, with the best building fabric and the best energy class in the pipeline",
+      text:"Friedrichsring 40 sits on Mannheim's eastern ring, where the Oststadt meets the Quadrate, a few minutes from the Neckar and about a kilometre from Paradeplatz. For a room-by-room WG the location works: the university in the Schloss is a flat six-minute cycle, the tram runs on the Friedrichsring itself, and the rent evidence is solid with 75 comparable rooms across Oststadt, Quadrate and Innenstadt at a median of €493 and P75 €550, all three room rents coming from real size-band medians rather than extrapolation. What sets this one apart from the rest of the pipeline is the building. It is from 1903, but the owners have reinvested continuously since 2010 — roof with insulation, façade, stairwell, cellars, electrics, water mains, district-heating station — and the result is a consumption certificate of 68 kWh/(m²·a), class B, valid to 2035, against class E or G everywhere else here. The counterweights are structural rather than physical: since 2025 the community has no professional manager, the reserve gets only €10,000 a year for a 122-year-old house, and the fourth floor has no lift."},
+    considerations:[
+      {rag:"r", t:"No professional manager since 2025", d:"The 2025 assembly minuted \"der Verwaltervertrag wurde verworfen\". Ralf Sommer, himself a co-owner, had been elected manager until 2027; administration and maintenance now sit with the co-owners Chris Leder and Simon Dörr, and the service-charge statement is produced through the eddi24.de portal at about €16 per statement charged to each owner, with no contractual commitment. That saves money — there is genuinely no manager's fee line in the accounts — but it also means no professional liability cover, no guaranteed continuity, and a lender may ask questions. Assemblies are online meetings of seven people and the minutes run to one page. Before bidding, ask who is legally responsible for administration from 2026, whether a Beschlusssammlung is maintained, and get it in writing."},
+      {rag:"r", t:"Reserve far too thin for a 1903 building", d:"The planned reserve contribution is €10,000/yr for the entire house — €60/mo per unit — and the carried-forward balance shown in the 2024/25 plan is €1,370.17. No total reserve figure appears anywhere in the file. Against that: the roof over the 5th-floor terrace leaked and was sealed in 2026 with the chimney repointed, paid straight out of the maintenance account, and a €3,224.90 painter's final invoice for the courtyard walls plus a €595 front-door lock came off the same account in 2024/25. The refurbishment history is genuinely impressive, but it was funded as-you-go, which for you means special levies rather than a cushion. Request the current reserve balance from the advisory board before making an offer."},
+      {rag:"a", t:"€269,000 puts cashflow just under water", d:"At the default 5% equity and 6% annuity the flat runs about −€39/mo. The zero line sits at roughly €260,000 list / €247,000 negotiated, so a 3–4% discount below asking flips it positive; at €250,000 it clears roughly +€18/mo. Two things move it further in your favour and are not in the model: Baden-Württemberg RETT is 5.0%, not the 6.5% the dashboard assumes, which cuts purchase costs by about €3,833; and the WEG still bills this unit on 83.4 m² while the 2025 measurement says 78.74 m², so the Hausgeld share is overstated by roughly 6% if the key is ever corrected."},
+      {rag:"a", t:"Fourth-floor walk-up, no balcony, no fitted kitchen", d:"1903 building, EG to 4.OG plus a roof floor, and no lift. The unit has no balcony — the 2013 balcony refurbishment covered the courtyard side, and this flat's measured plan shows none. Nothing in the listing mentions a fitted kitchen, so the model carries the €6,000 kitchen allowance on top of the €1,000 of appliances. For by-room letting, where you re-let one room at a time, a top-floor walk-up narrows the tenant pool and makes every turnover harder."},
+      {rag:"a", t:"Water consumption of 97 m³ in one year", d:"The 2024/25 statement records meter 2108763454 running from 186.852 to 283.975 m³ — 97.123 m³ for this flat in twelve months, which costs €253.85 fresh plus €193.66 waste water. The building total jumped from 817 to 1,121 m³ over the same period. That is far above a normal household and points at either a leak, a running cistern or a meter problem. Have it checked before completion; if it is a defect inside the flat it is yours to fix."},
+      {rag:"a", t:"Vacant possession is not confirmed", d:"The listing says nothing about a tenancy in either direction. The whole by-room model depends on getting the flat empty — a sitting tenant on an old contract would make the €1,460 of modelled warm rent unreachable for years. Get this answered before anything else."},
+      {rag:"g", t:"Class B at 68 kWh/(m²·a) — by far the best energy position in the pipeline", d:"Techem consumption certificate, registration BW-2025-005908203, valid to 17.08.2035, district heating, 68 kWh/(m²·a). Compare class E at Mecklenburgring and Gießen and class G at Trier. Consumption ran 41,200 → 42,750 → 62,730 kWh for the building over 03/22–02/25. The listing's claim that the previous long-term occupants of this flat paid about €50 a month for heating is consistent with the €50 monthly heating advance in the accounts. Heating sits inside the Hausgeld and is umlagefähig, and there is no §71 GEG boiler obligation on you."},
+      {rag:"g", t:"Best-documented property in the pipeline, and the room sizes are certified", d:"Teilungserklärung plus the 2020 Nachtrag (Notar Dr. Hagen Wolff, UR-Nr. 4146/2020), Abgeschlossenheitsbescheinigung, 2025 land register extract, cadastral map, elevations and sections, building description, buildings insurance policy and the 2025 property-tax assessment are all in the file. On top of that a signed WoFlV calculation and a dimensioned 1:100 plan from December 2025. Nothing here rests on an estimate — and every document a lender asks for is already available."},
+      {rag:"g", t:"Cleanest WG layout in the pipeline", d:"21.59 / 18.05 / 11.84 m² of lettable rooms, each opening off the 8.04 m² hall, with the kitchen/dining room enclosed and separate. The largest room is 1.20× the second-largest, the tightest ratio of any property assessed, so no single oversized room has to carry an implausible rent. All three rents come from proper ±3 m² band medians — n=32, n=40 and n=16 — in a pool of 75 comparable rooms."},
+      {rag:"g", t:"Twelve years of continuous reinvestment, and no manager's fee", d:"Roof with insulation and slate dormers (2010), district-heating compact station with night setback (2010), cellars and structural ceiling strengthening (2011–2012), new main power supply and per-unit sub-distribution (2012), stainless-steel water mains (2013), courtyard balconies (2013), street façade and balconies (2020), stairwell (2021), courtyard walls (2024). The agent's line that little should be needed in the coming years is, unusually, supported by the paperwork. And because the community self-administers, there is no manager's fee inside the Hausgeld at all."}
+    ],
+    investDocs:[
+      {label:"Energy performance certificate", ok:"g", note:"Techem consumption certificate BW-2025-005908203, 68 kWh/(m²·a), class B, district heating, valid to 17.08.2035"},
+      {label:"Current business plan (Wirtschaftsplan)", ok:"a", note:"Wirtschaftsplan 01.09.2024–31.08.2025 present (Hausverwaltung Ralf Sommer, 05.09.2025), €270/mo total. ⚠️ The 2025/26 plan is not in the file — request it, especially as the community changed its administration in the meantime"},
+      {label:"Last three WEG meeting minutes", ok:"g", note:"Protokoll 2024 (07.02.2024), 2025 (24.01.2026) and 2026 (08.02.2026) all present — one page each, online meetings of seven owners"},
+      {label:"Last three service-charge statements", ok:"a", note:"Only 2024/25 present (Betriebs- und Heizkostenabrechnung, 03.09.2025, €175.40 arrears). The two prior years are missing — request them to verify the cost trend"},
+      {label:"Dimensioned floor plan / living-area calculation", ok:"g", note:"WoFlV calculation for WE 11, 78.74 m², 1000hands AG, 15.12.2025, signed, plus the matching dimensioned 1:100 plan (09.12.2025) with every room area"}
+    ],
+    loanDocs:[
+      {label:"Declaration of division (Teilungserklärung)", ok:"g", note:"Present, together with the Nachtrag of 11.12.2020 (Notar Dr. Hagen Wolff, Mannheim, UR-Nr. 4146/2020) that added the 5.OG roof terrace and re-cut the MEA to the 1,000 basis"},
+      {label:"Subdivision plan (Aufteilungsplan)", ok:"g", note:"Elevations and sections plus the dimensioned floor plan are in the file"},
+      {label:"Certificate of self-containment (Abgeschlossenheitsbescheinigung)", ok:"g", note:"Present, bundled with the declaration of division"},
+      {label:"Current land register extract (Grundbuchauszug)", ok:"g", note:"2025 extract present; Abt. III shows historic charges of €100,000, €150,000, €136,000 and €80,000, all marked deleted"},
+      {label:"Site plan / cadastral map (Lageplan/Flurkarte)", ok:"g", note:"Liegenschaftskataster extract present, Flurstück 4845/15, plot 468 m²"},
+      {label:"Living-area calculation (Wohnflächenberechnung)", ok:"g", note:"Signed WoFlV calculation, 78.74 m², 1000hands AG, 15.12.2025 — note the WEG still distributes costs on 83.4 m²"}
+    ]
+  }
 ];
 
 // ---------- editable assumptions (defaults reproduce the strategy's standard annuity factor 0.539%/month) ----------
