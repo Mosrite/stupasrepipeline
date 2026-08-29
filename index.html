@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<script type="application/json" id="cowork-artifact-meta">
-{
-  "name": "Ankaufspruefung Pipeline",
-  "schemaVersion": 1,
-  "description": "Ankaufsprüfung dashboard for potential property investments. Dropdown (city – street) + compare. Per object: cashflow (RAG), equity, WG rooms with wg-gesucht.de per-room €/room benchmark, heating, distances, micro-location, key points, document checklists. 2 objects: Trier – Rottenfeldstraße 16 and Mannheim – U3, 14."
-}
-</script>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -300,8 +293,8 @@ const PROPERTIES = [
   }
 ];
 
-// ---------- editable assumptions (defaults reproduce the strategy's standard annuity factor 0.539%/month) ----------
-const DEFAULTS = { interestPct:4.0, repaymentPct:2.0, downPct:5 }; // 4% interest + 2% repayment = 6%/yr (0.005/month); 5% equity
+// ---------- editable assumptions (defaults reproduce the strategy's standard annuity factor 0.516667%/month) ----------
+const DEFAULTS = { interestPct:4.2, repaymentPct:2.0, downPct:5 }; // 4.2% interest + 2% repayment = 6.2%/yr (0.00516667/month); 5% equity
 // SPARSE overrides: store ONLY fields the user actually changed, so a site update keeps custom values
 // while untouched fields always track the newest defaults. Per id: { warm:{idx:val}, negotiated, garageRent, downPct, interestPct, repaymentPct }
 const overrides = {};
